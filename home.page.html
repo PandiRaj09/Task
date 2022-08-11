@@ -1,0 +1,190 @@
+<ion-header>  
+  <ion-toolbar>  
+    <ion-buttons slot="start">  
+      <ion-menu-button></ion-menu-button>  
+    </ion-buttons>  
+    <ion-title>TASK</ion-title>  
+  </ion-toolbar>  
+</ion-header>
+
+
+
+<ion-content color="light">   <!-- SEGMENT  -->
+  <ion-toolbar sty>  
+    <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segment" color="primary">  
+      <ion-segment-button value="0">  
+        <ion-label>QUERY</ion-label>  
+       </ion-segment-button>  
+      <ion-segment-button value="1">  
+        <ion-label>JOBNO</ion-label>  
+     </ion-segment-button>  
+      <ion-segment-button value="2">  
+        <ion-label>INVOICE</ion-label>  
+        </ion-segment-button>  
+        <ion-segment-button value="3">  
+          <ion-label>ITEM</ion-label>  
+          </ion-segment-button>  
+    </ion-segment>  
+  </ion-toolbar>  
+    
+  <ion-slides #slides (ionSlideDidChange)="slideChanged()" scrollbar="true">  
+    <ion-slide>
+      <ion-card class=card1>
+<ion-row style="margin-top:-2% ;">
+<ion-col>
+  <ion-searchbar color="light" [(ngModel)]="filterTerm" placeholder="JobNo">  <ion-button style="height: 2.7rem;" (click)="initModal()" slot="end"color="light">go</ion-button></ion-searchbar>
+
+</ion-col> 
+
+      <ion-col><ion-searchbar [(ngModel)]="filterTerm" color="light" placeholder="MAWBNo">  <ion-button style="height: 2.6rem;" (click)="initModal1()" slot="end"color="light">go</ion-button></ion-searchbar></ion-col>
+</ion-row>
+<div style="margin-left:2%;border-right: 4%;">
+<ion-row >
+<ion-button (click)="get()">show</ion-button>
+<ion-button  (click)="exportToExcel()" color="success">Excel</ion-button>
+<ion-button color="danger">pdf</ion-button>
+</ion-row></div>
+<br>
+<div style="margin-left:2%;margin-right: 1%;border: 1px solid rgb(137, 199, 150);">
+<ion-row>
+  <ion-input size="15" color="tertiary"  [value]="dateTime" type="date">FromDate</ion-input>
+  
+  <ion-input size="15" color="tertiary"type="date">toDate</ion-input>
+
+
+</ion-row>
+</div>
+<br>
+<ion-row color=" light"size="12.5" style="margin-left:23%;">
+
+    <div class="btn-group">  <!--  RADIO BUTTON EVENT CHANG€   -->
+    <input type="radio" class="btn-check" (change)='JOBNO()' (change)='clrchge()' name="options" id="option1"  />
+    <label class="btn btn-primary" for="option1">JOBNO</label>
+  
+    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" />
+    <label class="btn btn-primary" for="option2">DATE</label>
+  
+    <input type="radio" class="btn-check" (change)='MAWBNO()' (change)='clrchge()'name="options"autocomplete="off" id="option3"/>
+    <label class="btn btn-primary" for="option3" >MAWBNO</label>
+
+    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" />
+    <label class="btn btn-primary" for="option4">ITEMNO</label>
+    
+    <input type="radio" class="btn-check" (change)='ALL()' (change)='clrchge1()'   name="options" id="option5" autocomplete="off" checked />
+    <label class="btn btn-primary" for="option5">ALL</label>
+  </div>
+   
+  </ion-row>
+  <div class="table-responsive" id="overflow" scrollable-Y="true">
+    <ion-grid class="ion-margin" >
+      <ion-row size="12.5">
+        <ion-col size="2">SNo</ion-col>
+        <ion-col  *ngIf="tab" size="2">JobNo</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+        <ion-col size="3">Date</ion-col>
+        <ion-col  *ngIf="tap"size="3">MAWBNo</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+        <ion-col size="2">ItemNo</ion-col>
+      </ion-row>
+      <!-- <ion-row >
+        <ion-col size="2">1</ion-col>
+        <ion-col size="2">07</ion-col>
+        <ion-col size="3">28-07-2022</ion-col>
+        <ion-col size="3">12321223</ion-col>
+        <ion-col size="2">12</ion-col>
+         
+      </ion-row> -->
+      <ion-row *ngFor="let table of Data | filter:filterTerm ; index as i" size="12.5">
+        <ion-col size="2">{{ i + 1 }}</ion-col>
+        <ion-col *ngIf="tab"size="2"  (click)="Segment(table)">{{ table.id }}</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+        <ion-col size="3" >{{ table.status }}</ion-col>
+        <ion-col  *ngIf="tap" size="3">{{ table.id }}</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+        <ion-col size="2">{{ table.status }}</ion-col>
+        
+      </ion-row> 
+    
+    </ion-grid>
+  </div>
+
+
+<ion-button color="tertiary" *ngIf="colbtn" (click)="segment1()" class="btndsn">NEW BILL</ion-button>
+<ion-button color="success"  *ngIf="colbtn1"  (click)="segment1()" class="btndsn">NEW BILL</ion-button>
+</ion-card>
+   </ion-slide>
+
+    <ion-slide><!--  JOB NO PAGE   -->
+      <ion-card class=jobcard>
+      <ion-row>
+          <ion-row style="margin-top:-2% ;width: 100%;">
+        
+            <ion-searchbar color="light" [(ngModel)]="table" placeholder="JOBNO">  <ion-button style="height: 2.7rem;" (click)="initModal()" slot="end"color="light">go</ion-button></ion-searchbar>
+               
+          </ion-row>
+          <div class="table-responsive" id="overflow" style="width:100%" scrollable-Y="true">
+            <ion-grid class="ion-margin" >
+              <ion-row size="12.5">
+                <ion-col size="2">SNo</ion-col>
+                <ion-col  *ngIf="tab" size="2">JobNo</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+                <ion-col size="3">Date</ion-col>
+                <ion-col  *ngIf="tap"size="3">MAWBNo</ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+                <ion-col size="2">ItemNo</ion-col>
+              </ion-row>
+              <!-- <ion-row >
+                <ion-col size="2">1</ion-col>
+                <ion-col size="2">07</ion-col>
+                <ion-col size="3">28-07-2022</ion-col>
+                <ion-col size="3">12321223</ion-col>
+                <ion-col size="2">12</ion-col>
+                 
+              </ion-row> -->
+              <ion-row size="12.5">
+                <ion-col size="2"><ion-label >{{1}}</ion-label></ion-col>
+                <ion-col size="2"><ion-label >{{table}}</ion-label></ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+                <ion-col size="3" ><ion-label >{{table1}}</ion-label></ion-col>
+                <ion-col size="3"><ion-label >{{table}}</ion-label></ion-col> <!--  RADIO BUTTON EVENT CHANG€   -->
+                <ion-col size="2"><ion-label >{{table1}}</ion-label></ion-col>
+                
+              </ion-row> 
+            
+            </ion-grid>
+          </div>
+        
+
+        
+      <ion-button color="tertiary" (click)="segment0()" >BACK</ion-button> 
+      <ion-button color="success" (click)="segment2()" >NEXT BILL</ion-button>
+        </ion-row> 
+         </ion-card>
+      </ion-slide> 
+    
+      <ion-slide><!--  INVOICE PAGE   -->Third Segment
+        <ion-row>
+        <ion-button color="tertiary" *ngIf="tap"(click)="segment1()" >BACK</ion-button> 
+      <ion-button color="success" *ngIf="tab" (click)="segment3()" >NEXT BILL</ion-button></ion-row>
+     </ion-slide>  
+   
+
+
+
+ <ion-slide><!--  ITEM PAGE   -->
+     <ion-content class="card2"> <!-- MODEL POPUP  -->
+  <div id="container">
+    <ion-button (click)="initModal()">JOBPOPUP</ion-button>
+
+    <p *ngIf="modalDataResponse">{{modalDataResponse}}</p>
+  
+  </div>
+
+  <div id="container">
+    <ion-button color="success"(click)="initModal1()">MAWBPOPUP</ion-button>
+
+    <p *ngIf="modalDataResponse">{{modalDataResponse}}</p>
+  
+  </div>
+</ion-content>
+
+    </ion-slide> 
+
+
+    
+   
+  </ion-slides>  
+</ion-content>  
