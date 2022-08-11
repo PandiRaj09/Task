@@ -1,0 +1,375 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Schoolinfo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <ion-row
+      color=" light"
+      size="12.5"
+      style="margin-left: 35%; margin-top: 2%"
+    >
+      <div class="btn-group">
+        <!--  RADIO BUTTON EVENT CHANG€   -->
+        <input
+          type="radio"
+          class="btn-check"
+          (change)="clrchge1()"
+          name="options"
+          autocomplete="off"
+          id="option1"
+        />
+        <label class="btn btn-primary" for="option1">SCHOOL</label>
+
+        <input
+          type="radio"
+          class="btn-check"
+          (change)="clrchge()"
+          name="options"
+          autocomplete="off"
+          id="option2"
+        />
+        <label class="btn btn-primary" for="option2">COLLEGE</label>
+      </div>
+    </ion-row>
+
+    <div *ngIf="colbtn">
+      <ion-card class="card1" id="overflow">
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label position="floating">School Name</ion-label>
+          <ion-input type="text" [(ngModel)]="SCLName"></ion-input>
+        </ion-item>
+
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label position="floating">Student Name</ion-label>
+          <ion-input type="text" [(ngModel)]="StdName"></ion-input>
+        </ion-item>
+
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label style="height: 80%" position="floating">Address</ion-label>
+          <ion-textarea [(ngModel)]="SAddress"></ion-textarea>
+        </ion-item>
+
+        <ion-item
+          style="
+            width: 70%;
+            margin-left: 10%;
+            border: solid 1px rgb(14, 130, 134);
+            margin-top: 2%;
+            margin-bottom: 2%;
+          "
+        >
+        
+          <ion-label style="height: 80%" position="floating"
+            >Student Mark</ion-label
+          >
+          <ion-checkbox
+            (click)="show()"
+            color="tertiary"
+            style="width: 10%; height: 25%"
+            
+          ></ion-checkbox>
+        </ion-item>
+      </ion-card> 
+
+      <!------------------------------------->
+<div *ngIf="isShow">
+      <ion-card class="card2" id="overflow">
+        <ion-row size="12.5">
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+                checked
+                (click)="showT()"
+                [(ngModel)]="soldItem"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>TAMIL</ion-label>
+              <div *ngIf="isShowT"><ion-input [(ngModel)]="TAMIL" type="text"></ion-input></div>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showE()"
+                [(ngModel)]="soldItem1"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>ENGLISH</ion-label>
+              <div *ngIf="isShowE"><ion-input [(ngModel)]="ENGLISH" type="text"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showM()"
+                [(ngModel)]="soldItem2"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>MATHS</ion-label>
+              <div *ngIf="isShowM"> <ion-input [(ngModel)]="MATHS" type="text"></ion-input></div>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showP()"
+                [(ngModel)]="soldItem3"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>PHYSICS</ion-label>
+              <div *ngIf="isShowP"><ion-input [(ngModel)]="PHYSICS" type="text"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="8">
+            <ion-item>
+              <ion-checkbox
+              (click)="showC()"
+                [(ngModel)]="soldItem4"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>CHEMISTRY</ion-label>
+              <div *ngIf="isShowC"><ion-input [(ngModel)]="CHEMISTRY" type="text"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row size="12.5">
+          <ion-col size="2">
+            <ion-button (click)="sum()">SUM </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label style="font-size:x-large;margin-left:-2%;margin-top: -2% ;color: rgb(221, 128, 51);">TOTAL&nbsp;=</ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label  style=" font-size:x-large;color: rgb(129, 125, 125);margin-left: -15%;"type="text" color="tertory" placeholder="Totalvalue"
+              >{{Total}}</ion-label
+            >
+          </ion-col>
+          <ion-col size="2">
+            <ion-button color="success" (click)="save()">SAVE</ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card>
+
+      <ion-card class="card3" id="overflow">
+        <ion-grid class="ion-margin">
+          <ion-row size="12.5">
+            <ion-col size="3">SchoolName</ion-col>
+            <ion-col size="3">StudentName</ion-col>
+            <!--  RADIO BUTTON EVENT CHANG€   -->
+            <ion-col size="4">SchoolAddress</ion-col>
+            <ion-col size="2">Total</ion-col>
+            <!--  RADIO BUTTON EVENT CHANG€   -->
+          </ion-row>
+          <!-- <ion-row >
+        <ion-col size="2">1</ion-col>
+        <ion-col size="2">07</ion-col>
+        <ion-col size="3">28-07-2022</ion-col>
+        <ion-col size="3">12321223</ion-col>
+        <ion-col size="2">12</ion-col>
+       </ion-row>   -->
+       <ion-row size="12.5">
+         <ion-col size="3">{{ SCLName1 }}</ion-col> 
+          <ion-col size="3">{{ StdName1 }}</ion-col>
+        <ion-col  size="4">{{ SAddress1 }}</ion-col>
+           <ion-col size="2">{{ Total1}}</ion-col>
+        
+      </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div></div>
+
+
+
+<!-- 
+--------------------------------------------------------------------------------------------------- -->
+
+    <div *ngIf="colbtn1">
+    
+
+      <ion-card class="card1" id="overflow">
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label position="floating">College Name</ion-label>
+          <ion-input type="text" [(ngModel)]="CLGName"></ion-input>
+        </ion-item>
+
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label position="floating">Student Name</ion-label>
+          <ion-input type="text" [(ngModel)]="CLGStdName"></ion-input>
+        </ion-item>
+
+        <ion-item style="width: 70%; margin-left: 10%">
+          <ion-label style="height: 80%" position="floating">Address</ion-label>
+          <ion-textarea [(ngModel)]="CLGSAddress"></ion-textarea>
+        </ion-item>
+
+        <ion-item
+          style="
+            width: 70%;
+            margin-left: 10%;
+            border: solid 1px rgb(14, 130, 134);
+            margin-top: 2%;
+            margin-bottom: 2%;
+          "
+        >
+        
+          <ion-label style="height: 80%" position="floating"
+            >Student Mark</ion-label
+          >
+          <ion-checkbox
+            (click)="CLGshow()"
+            color="tertiary"
+            style="width: 10%; height: 25%"
+            
+          ></ion-checkbox>
+        </ion-item>
+      </ion-card> 
+
+      <!------------------------------------->
+<div *ngIf="isCLGShow">
+      <ion-card class="card2" id="overflow">
+        <ion-row size="12.5">
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+                checked
+                (click)="showCS()"
+                [(ngModel)]="soldItem7"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>Computer Sciences</ion-label>
+              <div *ngIf="isShowCS"><ion-input [(ngModel)]="ComputerSciences" type="number"></ion-input></div>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showENG()"
+                [(ngModel)]="soldItem8"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>Logic</ion-label>
+              <div *ngIf="isShowENG"><ion-input [(ngModel)]="Logic" type="number"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showMTS()"
+                [(ngModel)]="soldItem9"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>Mathematics</ion-label>
+              <div *ngIf="isShowMTS"> <ion-input [(ngModel)]="Mathematics" type="number"></ion-input></div>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-checkbox
+              (click)="showSS()"
+                [(ngModel)]="soldItem10"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox 
+              >&nbsp;
+              <ion-label>Statistics</ion-label>
+              <div *ngIf="isShowSS"><ion-input [(ngModel)]="Statistics" type="number"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="8">
+            <ion-item>
+              <ion-checkbox
+              (click)="showSC()"
+                [(ngModel)]="soldItem11"
+                style="margin-left: 1%"
+                name="TAMIL"
+              ></ion-checkbox
+              >&nbsp;
+              <ion-label>Systems Science</ion-label>
+              <div *ngIf="isShowSC"><ion-input [(ngModel)]="SystemsScience" type="number"></ion-input></div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row size="12.5">
+          <ion-col size="2">
+            <ion-button (click)="sum2()">SUM</ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-label style="font-size:x-large;margin-left:-2%;margin-top: -2% ;color: rgb(221, 128, 51);">TOTAL&nbsp;=</ion-label>
+          </ion-col>
+          <ion-col size="3">
+            <ion-label  style=" font-size:x-large;color: rgb(129, 125, 125);margin-left: -15%;"type="text" color="tertory" placeholder="Totalvalue"
+              >{{Total2}}</ion-label
+            >
+          </ion-col>
+          <ion-col size="2">
+            <ion-button color="success" (click)="save1()">SAVE</ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </ion-card>
+
+      <ion-card class="card3" id="overflow">
+        <ion-grid class="ion-margin">
+          <ion-row size="12.5">
+            <ion-col size="3">CollegeName</ion-col>
+            <ion-col size="3">StudentName</ion-col>
+            <!--  RADIO BUTTON EVENT CHANG€   -->
+            <ion-col size="4">CollegeAddress</ion-col>
+            <ion-col size="2">Total</ion-col>
+            <!--  RADIO BUTTON EVENT CHANG€   -->
+          </ion-row>
+          <!-- <ion-row >
+        <ion-col size="2">1</ion-col>
+        <ion-col size="2">07</ion-col>
+        <ion-col size="3">28-07-2022</ion-col>
+        <ion-col size="3">12321223</ion-col>
+        <ion-col size="2">12</ion-col>
+       </ion-row>   -->
+       <ion-row size="12.5">
+         <ion-col size="3">{{ CLGName1 }}</ion-col> 
+          <ion-col size="3">{{ CLGStdName1 }}</ion-col>
+        <ion-col  size="4">{{ CLGSAddress1 }}</ion-col>
+           <ion-col size="2">{{ Total4}}</ion-col>
+        
+      </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+
+    </div>
+
+</ion-content>
